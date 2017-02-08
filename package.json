@@ -1,0 +1,13 @@
+{
+  "name": "words-with-emily",
+  "version": "0.1.0",
+  "description": "With assistance I can beat Emily in Scrabble(tm). This is my assistance.",
+  "main": "app.js",
+  "repository": {},
+  "author": "Rich Burke <rich.burke.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-native": "^0.41.2"
+  }
+}
