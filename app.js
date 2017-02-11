@@ -1,11 +1,12 @@
 const fs = require('fs');
 const readline = require('readline');
+const jsonfile = require('jsonfile');
 const debug = require('debug')('words');
 const debugv = require('debug')('words:verbose');
 const debugvv = require('debug')('words:verbose:high');
 
-const FN = process.cwd() + '/data/enable-list.txt';
-debugv('Read from', FN);
+const IN = process.cwd() + '/data/dictionary.json';
+debugv('Read from', IN);
 
 let WORDS = [];
 
@@ -54,19 +55,25 @@ const findMatchingWords = (words, suppliedLetters) => {
   }, []);
 };
 
-const rdlnDictionary = readline.createInterface({
-    input: fs.createReadStream(FN),
-    terminal: false
-  })
-  .on('line', (line) => {
-     WORDS.push(line);
-  })
-  .on('close', () => {
-    askForLetters()
-      .then((letters) => {
-        console.log(letters);
-        console.log(WORDS.length);
-        console.log(findMatchingWords(WORDS, letters.split('')));
-        process.exit(0);
-      });
-  });
+//jsonfile.readFile(IN, {spaces: 2}, (err, data) => {
+jsonfile.readFile(IN, (err, data) => {
+  console.log(data[1]);
+  process.exit(0);
+});
+
+// const rdlnDictionary = readline.createInterface({
+//     input: fs.createReadStream(IN),
+//     terminal: false
+//   })
+//   .on('line', (line) => {
+//      WORDS.push(line);
+//   })
+//   .on('close', () => {
+//     askForLetters()
+//       .then((letters) => {
+//         console.log(letters);
+//         console.log(WORDS.length);
+//         console.log(findMatchingWords(WORDS, letters.split('')));
+//         process.exit(0);
+//       });
+//   });

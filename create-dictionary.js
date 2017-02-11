@@ -1,10 +1,13 @@
 const fs = require('fs');
 const readline = require('readline');
+const jsonfile = require('jsonfile');
 const debug = require('debug')('create-dictionary');
 const debugv = require('debug')('create-dictionary:verbose');
 
-const FN = process.cwd() + '/data/test-list.txt';
-debugv('Read from', FN);
+const IN = process.cwd() + '/data/enable-list.txt';
+const OUT = process.cwd() + '/data/dictionary.json';
+
+debugv('Read from', IN);
 
 let words = [];
 
@@ -68,13 +71,18 @@ const scoreLetterByInfrequency = (letter) => {
 };
 
 const sortLettersByInfrequency = (letters) => {
-  let ranked = [];
-
-  /*
-  */
-  ranked = letters.map(letter => letter);
-
-  return ranked;
+  return letters.map((letter) => {
+      return {
+        letter,
+        score: scoreLetterByInfrequency(letter)
+      };
+    })
+    .sort((a, b) => {
+      return a.score - b.score;
+    })
+    .map((item) => {
+      return item.letter;
+    });
 };
 
 const findUniqueLetters = (word) => {
@@ -87,7 +95,7 @@ const findUniqueLetters = (word) => {
 };
 
 const rdln = readline.createInterface({
-    input: fs.createReadStream(FN),
+    input: fs.createReadStream(IN),
     terminal: false
   })
   .on('line', (line) => {
@@ -102,5 +110,6 @@ const rdln = readline.createInterface({
       };
     });
 
-    console.log(dictionary);
+    // jsonfile.writeFileSync(OUT, dictionary, {spaces: 2});
+    jsonfile.writeFileSync(OUT, dictionary);
   });
