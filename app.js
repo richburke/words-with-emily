@@ -10,6 +10,13 @@ debugv('Read from', IN);
 
 let WORDS = [];
 
+/**
+ * - Sort using new dictionary.
+ * - Break up sorts.
+ *   - From tray.
+ *   - From board. (regular expression)
+ */
+
 const rdlnCli = readline.createInterface({
   input: process.stdin,
   output: process.stdout,

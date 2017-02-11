@@ -1,13 +1,43 @@
+#!/usr/local/Homebrew/bin/node
+/*
+ * Created as an executable, for practice.  Remember to
+ *  Adjust the node executable, above, if needed
+ *  chmod u+x create-dictionary
+ *  ./create-dictionary
+ */
+/*
+ * Improvements:
+ * - Take in an array of files to be converted into the dictionary.  Additional
+ *   files could be user-defined words that they want to include but not add to
+ *   the real word list.
+ * - Better validation of command line arguments.
+ */
+
 const fs = require('fs');
 const readline = require('readline');
 const jsonfile = require('jsonfile');
+const argv = require('minimist')(process.argv.slice(2));
 const debug = require('debug')('create-dictionary');
 const debugv = require('debug')('create-dictionary:verbose');
 
-const IN = process.cwd() + '/data/enable-list.txt';
-const OUT = process.cwd() + '/data/dictionary.json';
+const displayCliHelp = () => {
+  console.log('create-dictionary (c) by Rich Burke <rich.burke.dev@gmail.com>');
+  console.log('   https://github.com/richburke/words-with-emily');
+  console.log('');
+  console.log('   Invoke with the following arguments:');
+  console.log('   --in    the relative file location for the source word list');
+  console.log('   --out   the relative file location for the dictionary');
+  console.log('');
+};
 
-debugv('Read from', IN);
+if (!argv.in || !argv.out) {
+  displayCliHelp();
+  process.exit(0);
+}
+
+const IN = process.cwd() + argv.in;
+const OUT = process.cwd() + argv.out;
+debugv('Read from', IN, 'Writing to', OUT);
 
 let words = [];
 
