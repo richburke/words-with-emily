@@ -6,12 +6,17 @@
   "repository": {},
   "author": "Rich Burke <rich.burke.dev@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "serve": "node server/index.js"
+  },
   "dependencies": {
     "bluebird": "^3.4.7",
     "debug": "^2.6.0",
+    "express": "^4.14.1",
     "jsonfile": "^2.4.0",
     "minimist": "^1.2.0",
     "react": "^15.4.2",
-    "react-native": "^0.41.2"
+    "react-native": "^0.41.2",
+    "socket.io": "^1.7.2"
   }
 }

@@ -11,6 +11,8 @@
  *   files could be user-defined words that they want to include but not add to
  *   the real word list.
  * - Better validation of command line arguments.
+ * - Add a default for output (simple).
+ * - Ability to create a new dictionary or update an existing one.
  */
 
 const fs = require('fs');
@@ -22,14 +24,19 @@ const debugv = require('debug')('create-dictionary:verbose');
 
 const displayCliHelp = () => {
   console.log('create-dictionary (c) by Rich Burke <rich.burke.dev@gmail.com>');
-  console.log('   https://github.com/richburke/words-with-emily');
+  console.log(' https://github.com/richburke/words-with-emily');
   console.log('');
-  console.log('   Invoke with the following arguments:');
-  console.log('   --in    the relative file location for the source word list');
-  console.log('   --out   the relative file location for the dictionary');
+  console.log(' Usage:');
+  console.log(' --help  output this information')
+  console.log(' --in    the relative file location for the source word list');
+  console.log(' --out   the relative file location for the dictionary');
   console.log('');
 };
 
+if (argv.help) {
+  displayCliHelp();
+  process.exit(0);
+}
 if (!argv.in || !argv.out) {
   displayCliHelp();
   process.exit(0);
